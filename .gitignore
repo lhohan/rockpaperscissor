@@ -1,2 +1,9 @@
+# scala
+.bsp/
+.scala-build/
 *.class
 *.log
+
+# vscode
+.vscode
+.metals/
