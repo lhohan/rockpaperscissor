@@ -23,6 +23,7 @@ class RockPaperScissorsCliSuite extends munit.FunSuite {
 
     val expectedOutputs: ListBuffer[String => Unit] = ListBuffer(
       expect("Welcome to Rock Paper Scissors!"),
+      expect("Valid commands are: 'rock', 'paper', 'scissors', 'stop'."),
       expect(""),
       expect("Please enter your move: "), // rock
       expectComputerMove,

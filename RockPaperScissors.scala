@@ -65,6 +65,7 @@ object RockPaperScissorsCLiGame:
 
   def writeWelcome(console: Console): Unit =
     console.writeLine("Welcome to Rock Paper Scissors!")
+    console.writeLine("Valid commands are: 'rock', 'paper', 'scissors', 'stop'.")
     console.writeLine("")
 
   def writeGameSummary(outcomes: List[Outcome], console: Console): Unit =
