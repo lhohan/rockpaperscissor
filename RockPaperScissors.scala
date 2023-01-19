@@ -1,32 +1,58 @@
 import scala.collection.immutable.LazyList.cons
-import CliCommand.*
-import Hand.*
-import Outcome.*
+import cli.model.CliCommand.*
+import cli.model.CliCommand
+import core.model.Hand.*
+import core.model.Outcome.*
+
 import scala.annotation.tailrec
 import scala.util.Random
+import cli.Console
+import core.model.{Hand, Outcome}
+import core.logic.play
+import core.Player
+import core.Player.*
 
 class RockPaperScissorsCLiGame(console: Console):
   import RockPaperScissorsCLiGame.*
 
-  // a player provides (maybe) a hand when asked
-  // no hand means player indicates he wants to stop
-  type Player =
-    () => Option[
-      Hand
-    ] // could be trait with more clear method (vs more concise)
-  case class Players(player1: Player, player2: Player)
-
   def start(): Unit =
     writeWelcome(console)
+    val outcomes =
+      playGame(console, cliPlayer(console), computerPlayer(console))
+    writeGameSummary(outcomes, console)
+  end start
+
+end RockPaperScissorsCLiGame
+
+object RockPaperScissorsCLiGame:
+
+  /** Coordinate getting the next hands of ech player until a player indicates
+    * they want to stop.
+    *
+    * Getting hands happens _sequentially_. First the hand of player1 is
+    * request, then the hand of player2.
+    *
+    * Each outcome gets written to the console.
+    *
+    * @param player1
+    * @param player2
+    * @return
+    *   All outcomes of rounds played.
+    */
+  def playGame(
+      console: Console,
+      player1: Player,
+      player2: Player
+  ): List[Outcome] =
+    case class Players(player1: Player, player2: Player)
 
     val outcomes = LazyList
-      .unfold(Players(cliPlayer, computerPlayer)) { players =>
+      .unfold(Players(player1, player2)) { players =>
         for {
-          hand1 <- players.player1.apply()
-          hand2 <- players.player2.apply()
-          _ = console.writeLine(s"I play ${hand2.show}")
+          hand1 <- players.player1.nextHand()
+          hand2 <- players.player2.nextHand()
           outcomeAndPlayers <-
-            val outcome = RockPaperScissorsCLiGame.play(hand1, hand2)
+            val outcome = play(hand1, hand2)
             console.writeLine(outcome.show)
             Some(outcome, players)
         } yield outcomeAndPlayers
@@ -34,37 +60,8 @@ class RockPaperScissorsCLiGame(console: Console):
       .toList
     end outcomes
 
-    writeGameSummary(outcomes, console)
-  end start
-
-  @tailrec
-  private def cliPlayer(): Option[Hand] =
-    console.writeLine("Please enter your move: ")
-    val line = console.readLine()
-    CliCommand.parse(line) match
-      case Play(hand) => Some(hand)
-      case Stop       => None
-      case Invalid =>
-        console.writeLine("Invalid move!")
-        cliPlayer()
-
-  val computerPlayer: () => Option[Hand] = () =>
-
-    val plays = Hand.values.toVector
-    val numberOfPlays = plays.length
-    val maxPlays = 100
-    var playCount = 0
-
-    if (playCount < maxPlays) then
-      val randomIndex = Random.between(0, numberOfPlays)
-      playCount = playCount + 1
-      val hand = plays(randomIndex)
-      Some(hand)
-    else None
-
-end RockPaperScissorsCLiGame
-
-object RockPaperScissorsCLiGame:
+    outcomes
+  end playGame
 
   def writeWelcome(console: Console): Unit =
     console.writeLine("Welcome to Rock Paper Scissors!")
@@ -89,16 +86,5 @@ object RockPaperScissorsCLiGame:
     console.writeLine(msg)
     ()
   end writeGameSummary
-
-  // todo: move to non-cli object
-  def play(humanPlay: Hand, computerPlay: Hand): Outcome =
-    (humanPlay, computerPlay) match
-      case (Rock, Scissors)     => PlayerWins
-      case (Scissors, Paper)    => PlayerWins
-      case (Paper, Rock)        => PlayerWins
-      case (Rock, Rock)         => Tie
-      case (Scissors, Scissors) => Tie
-      case (Paper, Paper)       => Tie
-      case _                    => ComputerWins
 
 end RockPaperScissorsCLiGame

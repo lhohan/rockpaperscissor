@@ -1,5 +1,7 @@
-import Hand.*
-import Outcome.*
+import core.logic.play
+import core.model.Hand.*
+import core.model.{Hand, Outcome}
+import core.model.Outcome.*
 
 class RockPaperScissorsRulesSuite extends munit.FunSuite {
 
@@ -35,7 +37,7 @@ class RockPaperScissorsRulesSuite extends munit.FunSuite {
   }
 
   private def assertDraw(humanPlay: Hand, computerPlay: Hand): Unit = {
-    val obtained = RockPaperScissorsCLiGame.play(humanPlay, computerPlay)
+    val obtained = play(humanPlay, computerPlay)
     val expected = Outcome.Tie
     assertEquals(
       obtained,
@@ -45,13 +47,13 @@ class RockPaperScissorsRulesSuite extends munit.FunSuite {
   }
 
   private def assertPlayer1Wins(humanPlay: Hand, computerPlay: Hand): Unit = {
-    val obtained = RockPaperScissorsCLiGame.play(humanPlay, computerPlay)
+    val obtained = play(humanPlay, computerPlay)
     val expected = Outcome.PlayerWins
     assertEquals(obtained, expected)
   }
 
   private def assertPlayer2Wins(humanPlay: Hand, computerPlay: Hand): Unit = {
-    val obtained = RockPaperScissorsCLiGame.play(humanPlay, computerPlay)
+    val obtained = play(humanPlay, computerPlay)
     val expected = Outcome.ComputerWins
     assertEquals(obtained, expected)
   }

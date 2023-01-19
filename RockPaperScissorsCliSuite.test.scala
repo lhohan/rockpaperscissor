@@ -1,14 +1,21 @@
 //> using lib "org.scalameta::munit::0.7.27"
 
+import munit.Assertions.fail
+
+import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 import scala.collection.mutable.Queue
 import scala.util.Try
 
+import cli.Console
+
 class RockPaperScissorsCliSuite extends munit.FunSuite {
+
+  import RockPaperScissorsCliSuite.*
 
   // End to end test closest to actually running the application.
   test("should print player outcomes if player plays some valid moves") {
-    val inputs = Queue("rock", "fire", "paper", "scissors", "stop")
+    val inputs = mutable.Queue("rock", "fire", "paper", "scissors", "stop")
     val outputs = ListBuffer.empty[String]
     val consoleMock = new ConsoleMock(inputs, outputs)
 
@@ -47,6 +54,10 @@ class RockPaperScissorsCliSuite extends munit.FunSuite {
     }
   }
 
+}
+
+object RockPaperScissorsCliSuite:
+
   val expectGameOutCome: String => Unit = line =>
     line match
       case "You win!" => ()
@@ -75,22 +86,23 @@ class RockPaperScissorsCliSuite extends munit.FunSuite {
   val expectNoMoreMessages: String => Unit = receivedMsg =>
     fail(s"No more output expected. Got: $receivedMsg")
 
-}
+  class ConsoleMock(inputs: mutable.Queue[String], outputs: ListBuffer[String])
+      extends Console:
 
-class ConsoleMock(inputs: Queue[String], outputs: ListBuffer[String])
-    extends Console:
+    // change this to 'true' if you want to see actual output while e.g. debugging
+    private val printToConsole = false
 
-  // change this to 'true' if you want to see actual output while e.g. debugging
-  private val printToConsole = false
-  def readLine(): String =
-    Try(inputs.dequeue())
-      .map(input =>
-        if (printToConsole) println(s"debug: input: $input")
-        input
-      )
-      .getOrElse("stop")
+    def readLine(): String =
+      Try(inputs.dequeue())
+        .map(input =>
+          if (printToConsole) println(s"debug: input: $input")
+          input
+        )
+        .getOrElse("stop")
 
-  def writeLine(line: String): Unit =
-    if (printToConsole) println(s"debug: output: $line")
-    outputs.append(line)
-end ConsoleMock
+    def writeLine(line: String): Unit =
+      if (printToConsole) println(s"debug: output: $line")
+      outputs.append(line)
+  end ConsoleMock
+
+end RockPaperScissorsCliSuite
