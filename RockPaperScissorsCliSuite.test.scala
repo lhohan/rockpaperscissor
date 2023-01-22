@@ -1,5 +1,3 @@
-//> using lib "org.scalameta::munit::0.7.27"
-
 import munit.Assertions.fail
 
 import scala.collection.mutable

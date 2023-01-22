@@ -15,12 +15,8 @@
       {
         devShells.default = pkgs.mkShell {
           packages = [
-            pkgs.cowsay
-            pkgs.coursier
-            pkgs.graalvm17-ce
-            pkgs.sbt
+            pkgs.temurin-bin-17
             pkgs.scala-cli
-            pkgs.scalafmt
           ];
         };
       });
