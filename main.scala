@@ -3,5 +3,5 @@ import cli.Console
 @main
 def startGame(): Unit =
   new RockPaperScissorsCLiGame(
-    Console.cmd
+    Console.cli
   ).start()

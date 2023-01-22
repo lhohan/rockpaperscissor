@@ -10,7 +10,7 @@ trait Console:
 end Console
 
 object Console:
-  def cmd: Console = new Console {
+  def cli: Console = new Console {
     def readLine(): String = StdIn.readLine()
     def writeLine(line: String): Unit = println(line)
   }

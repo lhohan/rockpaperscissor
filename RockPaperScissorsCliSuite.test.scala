@@ -11,7 +11,7 @@ class RockPaperScissorsCliSuite extends munit.FunSuite {
 
   import RockPaperScissorsCliSuite.*
 
-  // End to end test closest to actually running the application.
+  // End to end test closest to actually running the application testing the overall behavior.
   test("should print player outcomes if player plays some valid moves") {
     val inputs = mutable.Queue("rock", "fire", "paper", "scissors", "stop")
     val outputs = ListBuffer.empty[String]
