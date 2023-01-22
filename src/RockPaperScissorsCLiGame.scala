@@ -63,12 +63,12 @@ object RockPaperScissorsCLiGame:
     outcomes
   end playGame
 
-  def writeWelcome(console: Console): Unit =
+  private def writeWelcome(console: Console): Unit =
     console.writeLine("Welcome to Rock Paper Scissors!")
     console.writeLine("Valid commands are: 'rock', 'paper', 'scissors', 'stop'.")
     console.writeLine("")
 
-  def writeGameSummary(outcomes: List[Outcome], console: Console): Unit =
+  private def writeGameSummary(outcomes: List[Outcome], console: Console): Unit =
     case class Stats(playerWins: Int = 0, computerWins: Int = 0, ties: Int = 0)
 
     val stats = outcomes.foldLeft(Stats()) { (stats, outcome) =>
