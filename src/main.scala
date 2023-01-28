@@ -15,23 +15,49 @@ import core.Player.*
 
 @main
 def startGame(): Unit =
-  new RockPaperScissorsGame(
-    Console.cli
-  ).start()
+  val console = Console.cli
+  val game = RockPaperScissorsGame.singlePlayer(console)
+  // For fun:
+  // Needs refactoring to print out non-hardcoded names.
+  //  val game = RockPaperScissorsGame.twoPlayer(console)
+  //  val game = RockPaperScissorsGame.twoComputer(console)
+  game.start()
 
-class RockPaperScissorsGame(console: Console):
+class RockPaperScissorsGame private (
+    console: Console,
+    player1: Player,
+    player2: Player
+):
   import RockPaperScissorsGame.*
 
   def start(): Unit =
     writeWelcome(console)
     val outcomes =
-      playGame(console, cliPlayer(console), computerPlayer(console))
+      playGame(console, player1, player2)
     writeGameSummary(outcomes, console)
   end start
 
 end RockPaperScissorsGame
 
 object RockPaperScissorsGame:
+
+  /** A default Rock Paper Scissors game takes place between a player on CLI and
+    * a computer.
+    */
+  def singlePlayer(console: Console): RockPaperScissorsGame =
+    val player1 = cliPlayer(console)
+    val player2 = computerPlayer(console)
+    new RockPaperScissorsGame(console, player1, player2)
+
+  def twoPlayer(console: Console): RockPaperScissorsGame =
+    val player1 = cliPlayer(console)
+    val player2 = cliPlayer(console)
+    new RockPaperScissorsGame(console, player1, player2)
+
+  def twoComputer(console: Console): RockPaperScissorsGame =
+    val player1 = computerPlayer(console)
+    val player2 = computerPlayer(console)
+    new RockPaperScissorsGame(console, player1, player2)
 
   /** Coordinate getting the next hands of ech player until a player indicates
     * they want to stop.

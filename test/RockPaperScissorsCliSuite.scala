@@ -17,7 +17,7 @@ class RockPaperScissorsCliSuite extends munit.FunSuite {
     val outputs = ListBuffer.empty[String]
     val consoleMock = new ConsoleMock(inputs, outputs)
 
-    new RockPaperScissorsGame(consoleMock).start()
+    RockPaperScissorsGame.singlePlayer(consoleMock).start()
 
     val expectedOutputs: ListBuffer[String => Unit] = ListBuffer(
       expect("Welcome to Rock Paper Scissors!"),
@@ -59,10 +59,10 @@ object RockPaperScissorsCliSuite:
 
   val expectGameOutCome: String => Unit = line =>
     line match
-      case "You win!" => ()
-      case "I win!"   => ()
-      case "Tie"      => ()
-      case _          => fail(s"'$line' is not a valid outcome")
+      case "Player wins!"   => ()
+      case "Computer wins!" => ()
+      case "Tie"            => ()
+      case _                => fail(s"'$line' is not a valid outcome")
 
   val expectInvalid: String => Unit = line =>
     assert(line.toLowerCase.contains("invalid"), s"'$line' should be invalid")

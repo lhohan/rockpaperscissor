@@ -25,9 +25,9 @@ object model:
 
   extension (outcome: Outcome)
     def show: String = outcome match
-      case PlayerWins   => "You win!"
+      case PlayerWins   => "Player wins!"
       case Tie          => "Tie"
-      case ComputerWins => "I win!"
+      case ComputerWins => "Computer wins!"
 
 end model
 
@@ -55,11 +55,12 @@ object Player:
 
   def computerPlayer(console: Console): Player = new Player:
 
+    private var playCount = 0
+
     override def nextHand(): Option[Hand] =
       val plays = Hand.values.toVector
       val numberOfPlays = plays.length
       val maxPlays = 100
-      var playCount = 0
 
       if playCount < maxPlays then
         val randomIndex = Random.between(0, numberOfPlays)
