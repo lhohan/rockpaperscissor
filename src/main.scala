@@ -78,14 +78,14 @@ object RockPaperScissorsGame:
 
     val outcomes = LazyList
       .unfold(Players(player1, player2)) { players =>
-        for {
+        for
           hand1 <- players.player1.nextHand()
           hand2 <- players.player2.nextHand()
           outcomeAndPlayers <-
             val outcome = play(hand1, hand2)
             console.writeLine(outcome.show(player1.name, player2.name))
             Some(outcome, players)
-        } yield outcomeAndPlayers
+        yield outcomeAndPlayers
       }
       .toList
     end outcomes
