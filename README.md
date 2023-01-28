@@ -2,6 +2,10 @@
 
 A 'vanilla' Scala implementation using OO and FP concepts.
 
+OO: Used for dependency management.
+
+FP: Same input results in same output, also higher-order functions. Side-effects, notably the console, are abstracted but not managed using as effects. 
+
 ## Running and development
 
 This implementation uses `scala-cli`.
