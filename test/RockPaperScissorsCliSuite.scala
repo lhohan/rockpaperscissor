@@ -17,7 +17,7 @@ class RockPaperScissorsCliSuite extends munit.FunSuite {
     val outputs = ListBuffer.empty[String]
     val consoleMock = new ConsoleMock(inputs, outputs)
 
-    new RockPaperScissorsCLiGame(consoleMock).start()
+    new RockPaperScissorsGame(consoleMock).start()
 
     val expectedOutputs: ListBuffer[String => Unit] = ListBuffer(
       expect("Welcome to Rock Paper Scissors!"),
