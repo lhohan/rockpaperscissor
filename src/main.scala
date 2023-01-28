@@ -18,9 +18,8 @@ def startGame(): Unit =
   val console = Console.cli
   val game = RockPaperScissorsGame.singlePlayer(console)
   // For fun:
-  // Needs refactoring to print out non-hardcoded names.
-  //  val game = RockPaperScissorsGame.twoPlayer(console)
-  //  val game = RockPaperScissorsGame.twoComputer(console)
+//  val game = RockPaperScissorsGame.twoPlayer(console)
+//  val game = RockPaperScissorsGame.twoComputer(console)
   game.start()
 
 class RockPaperScissorsGame private (
@@ -34,7 +33,7 @@ class RockPaperScissorsGame private (
     writeWelcome(console)
     val outcomes =
       playGame(console, player1, player2)
-    writeGameSummary(outcomes, console)
+    writeGameSummary(outcomes, console, player1.name, player2.name)
   end start
 
 end RockPaperScissorsGame
@@ -50,13 +49,13 @@ object RockPaperScissorsGame:
     new RockPaperScissorsGame(console, player1, player2)
 
   def twoPlayer(console: Console): RockPaperScissorsGame =
-    val player1 = cliPlayer(console)
-    val player2 = cliPlayer(console)
+    val player1 = cliPlayer(console, "Player 1")
+    val player2 = cliPlayer(console, "Player 2")
     new RockPaperScissorsGame(console, player1, player2)
 
   def twoComputer(console: Console): RockPaperScissorsGame =
-    val player1 = computerPlayer(console)
-    val player2 = computerPlayer(console)
+    val player1 = computerPlayer(console, "Bob")
+    val player2 = computerPlayer(console, "Alice")
     new RockPaperScissorsGame(console, player1, player2)
 
   /** Coordinate getting the next hands of ech player until a player indicates
@@ -84,7 +83,7 @@ object RockPaperScissorsGame:
           hand2 <- players.player2.nextHand()
           outcomeAndPlayers <-
             val outcome = play(hand1, hand2)
-            console.writeLine(outcome.show)
+            console.writeLine(outcome.show(player1.name, player2.name))
             Some(outcome, players)
         } yield outcomeAndPlayers
       }
@@ -103,22 +102,24 @@ object RockPaperScissorsGame:
 
   private def writeGameSummary(
       outcomes: List[Outcome],
-      console: Console
+      console: Console,
+      player1Name: String,
+      player2Name: String
   ): Unit =
-    case class Stats(playerWins: Int = 0, computerWins: Int = 0, ties: Int = 0)
+    case class Stats(player1Wins: Int = 0, player2Wins: Int = 0, ties: Int = 0)
 
     val stats = outcomes.foldLeft(Stats()) { (stats, outcome) =>
       outcome match
-        case PlayerWins   => stats.copy(playerWins = stats.playerWins + 1)
-        case ComputerWins => stats.copy(computerWins = stats.computerWins + 1)
-        case Tie          => stats.copy(ties = stats.ties + 1)
+        case Player1Wins => stats.copy(player1Wins = stats.player1Wins + 1)
+        case Player2Wins => stats.copy(player2Wins = stats.player2Wins + 1)
+        case Tie         => stats.copy(ties = stats.ties + 1)
     }
 
     val msg = s"""
                  |Game ended! Here are the results:
-                 |    Player wins  : ${stats.playerWins}
-                 |    Computer wins: ${stats.computerWins}
-                 |    Ties         : ${stats.ties}
+                 |  $player1Name wins : ${stats.player1Wins}
+                 |  $player2Name wins: ${stats.player2Wins}
+                 |  Ties : ${stats.ties}
                  |""".stripMargin
     console.writeLine(msg)
     ()

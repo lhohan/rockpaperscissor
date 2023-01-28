@@ -48,13 +48,13 @@ class RockPaperScissorsRulesSuite extends munit.FunSuite {
 
   private def assertPlayer1Wins(humanPlay: Hand, computerPlay: Hand): Unit = {
     val obtained = play(humanPlay, computerPlay)
-    val expected = Outcome.PlayerWins
+    val expected = Outcome.Player1Wins
     assertEquals(obtained, expected)
   }
 
   private def assertPlayer2Wins(humanPlay: Hand, computerPlay: Hand): Unit = {
     val obtained = play(humanPlay, computerPlay)
-    val expected = Outcome.ComputerWins
+    val expected = Outcome.Player2Wins
     assertEquals(obtained, expected)
   }
 }

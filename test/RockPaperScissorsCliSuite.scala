@@ -23,18 +23,18 @@ class RockPaperScissorsCliSuite extends munit.FunSuite {
       expect("Welcome to Rock Paper Scissors!"),
       expect("Valid commands are: 'rock', 'paper', 'scissors', 'stop'."),
       expect(""),
-      expect("Please enter your move: "), // rock
+      expect("Please enter your move Player: "), // rock
       expectComputerMove,
       expectGameOutCome,
-      expect("Please enter your move: "), // fire
+      expect("Please enter your move Player: "), // fire
       expectInvalid,
-      expect("Please enter your move: "), // paper
+      expect("Please enter your move Player: "), // paper
       expectComputerMove,
       expectGameOutCome,
-      expect("Please enter your move: "), // scissors
+      expect("Please enter your move Player: "), // scissors
       expectComputerMove,
       expectGameOutCome,
-      expect("Please enter your move: "), // stop
+      expect("Please enter your move Player: "), // stop
       expectGameEnded,
       expectNoMoreMessages
     )
@@ -69,7 +69,7 @@ object RockPaperScissorsCliSuite:
 
   val expectComputerMove: String => Unit = line =>
     assert(
-      line.toLowerCase.contains("i play"),
+      line.toLowerCase.contains("computer play"),
       s"'$line' should be computer move"
     )
 
