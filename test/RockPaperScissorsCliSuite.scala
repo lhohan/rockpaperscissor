@@ -13,12 +13,17 @@ class RockPaperScissorsCliSuite extends munit.FunSuite {
 
   // End to end test closest to actually running the application testing the overall behavior.
   test("should print player outcomes if player plays some valid moves") {
+
+    // Setup a mock console with pre-set test commands as inputs
+    // The mock console records the outputs which can be verified
     val inputs = mutable.Queue("rock", "fire", "paper", "scissors", "stop")
     val outputs = ListBuffer.empty[String]
     val consoleMock = new ConsoleMock(inputs, outputs)
 
+    // run
     RockPaperScissorsGame.singlePlayer(consoleMock).start()
 
+    // verify
     val expectedOutputs: ListBuffer[String => Unit] = ListBuffer(
       expect("Welcome to Rock Paper Scissors!"),
       expect("Valid commands are: 'rock', 'paper', 'scissors', 'stop'."),
