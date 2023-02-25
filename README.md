@@ -6,6 +6,11 @@ OO: Used for dependency management.
 
 FP: Same input results in same output, also higher-order functions. Side-effects, notably the console, are abstracted but not managed using as effects. 
 
+Worthwhile in this implementation
+
+- The tests: 
+  - `RockPaperScissorsCliSuite` was written from a behavior perspective simulating 'end to end' interaction with the console. A goal here is to have a test that is relatively stable when the implementation would change.
+
 Note, not implemented:
 
 - Advanced computer logarithm. The current one just implements generates a random 'hand'.
@@ -14,7 +19,7 @@ Note, not implemented:
 
 ## Running and development
 
-This implementation uses `scala-cli`.
+This implementation uses `scala-cli`. A nix flake is setup to setup the required environment.
 
 Run:
 
