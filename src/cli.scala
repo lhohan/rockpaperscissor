@@ -20,8 +20,6 @@ object model:
 
   import core.model.Hand
 
-  case object Invalid
-
   enum CliCommand:
     case Stop
     case Play(h: Hand)

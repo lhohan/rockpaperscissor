@@ -36,7 +36,7 @@ trait Player:
   // - no hand means player indicates he wants to stop
   def nextHand(): Option[Hand]
 
-  val name: String = ""
+  def name: String
 
 object Player:
   def cliPlayer(console: Console, playerName: String = "Player"): Player =

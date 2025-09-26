@@ -1,17 +1,9 @@
 import cli.Console
-import scala.collection.immutable.LazyList.cons
-import cli.model.CliCommand.*
-import cli.model.CliCommand
-import core.model.Hand.*
+import core.model.Outcome
 import core.model.Outcome.*
-
-import scala.annotation.tailrec
-import scala.util.Random
-import cli.Console
-import core.model.{Hand, Outcome}
 import core.logic.play
 import core.Player
-import core.Player.*
+import core.Player.{cliPlayer, computerPlayer}
 
 @main
 def startGame(): Unit =
