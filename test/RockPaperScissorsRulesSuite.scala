@@ -1,7 +1,5 @@
 import core.logic.play
-import core.model.Hand.*
 import core.model.{Hand, Outcome}
-import core.model.Outcome.*
 
 class RockPaperScissorsRulesSuite extends munit.FunSuite {
 

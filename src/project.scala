@@ -2,7 +2,12 @@
 
 // Runtimes:
 //> using jvm "zulu:17"
-//> using scala "3.2.2"
+//> using scala "3.3.6"
 
 // Libraries:
-//> using lib "org.scalameta::munit::0.7.29"
+//> using lib "org.scalameta::munit::1.2.0"
+
+// Compiler options:
+//> using options "-deprecation"
+//> using options "-Werror"
+//> using options "-Wunused:all"
